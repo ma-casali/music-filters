@@ -40,19 +40,18 @@ mpl.rcParams['savefig.dpi'] = 150 # set dpi to MATLAB default
 
 plt.close('all')
     
-fs, data = wavfile.read(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\231128_001.wav")
+fs, data = wavfile.read(r"your-file.wav")
 dt = 1/fs
 
 n = 30*fs
 start = 0*fs
-
-wavfile.write(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\cut_recording.wav", fs, data[start:start + n,0])
+wavfile.write(r"your-file_trimmed.wav", fs, data[start:start + n,0])
 
 #%%
 
 plt.close('all')
     
-fs, data = wavfile.read(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\cut_recording.wav")
+fs, data = wavfile.read(r"your-file_trimmed.wav")
 dt = 1/fs
 t_old = np.arange(len(data))*dt
 
@@ -103,41 +102,13 @@ t_Z, new_data = np.real(signal.istft(Z_new, fs = fs, nperseg = N, noverlap = 3*N
     
 new_data = new_data/np.max(np.abs(new_data))
 new_data = np.int16(new_data*32767)
-
-# fig, ax = plt.subplots()
-# ax.grid(False)
-# ax.pcolormesh(t_filter, f, 20*np.log10(np.abs(Z_new[:,:])), shading = 'gouraud')
-# ax.axhline((1/(np.diff(t_filter)[0])),color = 'r', linestyle = ':', alpha = 0.5)
-
-# fig, ax = plt.subplots()
-# ax.plot(t_Z, new_data/np.max(np.abs(new_data)), label = 'Output')
-# ax.plot(t_old, data/np.max(np.abs(data)), label = 'Input', alpha = 0.5)
-# ax.legend()
-
-# freq = np.fft.fftfreq(len(new_data), d = np.diff(t_Z)[0])
-# freq_old = np.fft.fftfreq(len(data), d = np.diff(t_old)[0])
-# newFFT = np.abs(np.fft.fft(new_data))
-# oldFFT = np.abs(np.fft.fft(data))
-# Lnew = int(len(freq)/2)
-# Lold = int(len(freq_old)/2)
-
-# fig, ax = plt.subplots()
-# ax.plot(freq[1:Lnew], newFFT[1:Lnew]/np.max(newFFT), label = 'Output')
-# ax.plot(freq_old[1:Lold], oldFFT[1:Lold]/np.max(oldFFT), label = 'Input', alpha = 0.5)
-# for n in range(20):
-#     ax.axvline((1/(np.diff(t_filter)[0]))*n,color = 'r',alpha = 1-n/20)
-# ax.set_xscale('log')
-# ax.set_yscale('log')
-# ax.legend()
-    
-# new_data = new_data.flatten()
-wavfile.write(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\recording_out.wav", fs, new_data.astype(np.int16))
+wavfile.write(r"your-file_output.wav", fs, new_data.astype(np.int16))
 
 #%%
 
 plt.close('all')
     
-fs, data = wavfile.read(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\cut_recording.wav")
+fs, data = wavfile.read(r"your-file_trimmed.wav")
 dt = 1/fs
 t_old = np.arange(len(data))*dt
 
@@ -189,34 +160,5 @@ t_Z, new_data = np.real(signal.istft(Z_new, fs = fs, nperseg = N, noverlap = 3*N
     
 new_data = new_data/np.max(np.abs(new_data))
 new_data = np.int16(new_data*32767)
-
-# fig, ax = plt.subplots()
-# ax.grid(False)
-# ax.pcolormesh(t_filter, f, 20*np.log10(np.abs(Z_new[:,:])), shading = 'gouraud')
-# ax.axhline((1/(np.diff(t_filter)[0])),color = 'r', linestyle = ':', alpha = 0.5)
-
-fig, ax = plt.subplots()
-ax.plot(t_Z, new_data/np.max(np.abs(new_data)), label = 'Output')
-ax.plot(t_old, data/np.max(np.abs(data)), label = 'Input', alpha = 0.5)
-ax.legend()
-
-freq = np.fft.fftfreq(len(new_data), d = np.diff(t_Z)[0])
-freq_old = np.fft.fftfreq(len(data), d = np.diff(t_old)[0])
-newFFT = np.abs(np.fft.fft(new_data))
-oldFFT = np.abs(np.fft.fft(data))
-Lnew = int(len(freq)/2)
-Lold = int(len(freq_old)/2)
-
-fig, ax = plt.subplots()
-ax.plot(freq[1:Lnew], newFFT[1:Lnew]/np.max(newFFT), label = 'Output')
-ax.plot(freq_old[1:Lold], oldFFT[1:Lold]/np.max(oldFFT), label = 'Input', alpha = 0.5)
-for n in range(20):
-    ax.axvline((1/(np.diff(t_filter)[0]))*n,color = 'r',alpha = 1-n/20)
-ax.set_xscale('log')
-ax.set_yscale('log')
-ax.set_xlim([freq[1], freq[Lnew]])
-ax.legend()
-    
-# new_data = new_data.flatten()
-wavfile.write(r"C:\Users\Matthew\Documents\Python_Scripts\Personal_Projects\Music\recording_out.wav", fs, new_data.astype(np.int16))
+wavfile.write(r"your-file_output.wav", fs, new_data.astype(np.int16))
 
